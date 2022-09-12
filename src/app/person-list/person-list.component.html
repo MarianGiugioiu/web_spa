@@ -1,0 +1,31 @@
+<label class="search-label" for="search">Cautare:</label>
+<input class="form-control search-input" type="text" name="search" [(ngModel)]="nameFilter" (ngModelChange)="handleNameFilterChange()">
+
+<label class="search-label">Sortare:</label>
+<mat-form-field class="select-container">
+  <mat-select class="select" [value]="columns[0].value" (selectionChange)="changeColumn($event.value)">
+    <mat-option *ngFor="let column of columns" [value]="column.value">
+      {{column.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="list-container">
+  <div class="group-list" *ngIf="isSortedBy===''">
+    <div *ngFor="let item of filteredPersons" >
+      <button class="group-element" (click)="goToPerson(item.id)">{{item.firstName}} {{item.lastName}}</button>
+    </div>
+  </div>
+  <div class="contact-list" *ngIf="isSortedBy!==''">
+    <div *ngFor="let key of groupKeys" >
+      <button class="list-element" (click)="toggleGroup(key)">{{key}}</button>
+      <div *ngIf="activeGroups[key] === true">
+        <div class="group-list" *ngFor="let item of groupedPersons[key]" >
+          <button class="group-element" (click)="goToPerson(item.id)">{{item.firstName}} {{item.lastName}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-success button-create" (click)="addPerson()">Adauga contact</button>

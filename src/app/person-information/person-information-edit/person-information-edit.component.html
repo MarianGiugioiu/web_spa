@@ -1,0 +1,153 @@
+<div class="page-container">
+  <div class="form-container">
+    <div class="title-container">
+      <h1>Editeaza contact</h1>
+    </div>
+    <div class="inputs-container">
+
+      <div class="form-control-container">
+        <label for="lastName">
+          Nume:
+          <em *ngIf="personError.lastName !== ''">{{personError.lastName}}</em>
+        </label>
+          <input class="form-control" [(ngModel)]="person.lastName" (ngModelChange)="handleLastNameChange()" name="lastName">
+      </div>
+
+      <div class="form-control-container">
+        <label for="firstName">
+          Prenume:
+          <em *ngIf="personError.firstName !== ''">{{personError.firstName}}</em>
+        </label>
+        <input class="form-control" [(ngModel)]="person.firstName" (ngModelChange)="handleFirstNameChange()" name="firstName">
+      </div>
+
+      <div class="form-control-container">
+        <label for="birthDate">
+          Data nasterii:
+
+        </label>
+        <div class="datepicker-field-container">
+          <input [(ngModel)]="person.birthDate" name="birthDate" matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+      </div>
+
+      <div class="list-container">
+        <h5>Telefon</h5>
+        <button *ngIf="person.phoneNumber.length === 0" class="btn btn-light add-button" (click)="addPhone()" >Adauga telefon</button>
+        <div *ngIf="person.phoneNumber.length > 0"  class="list-content-container">
+          <div class="form-control-container-small">
+            <label for="phoneType">Tip:</label>
+            <div class="type-field-container">
+              <mat-select class="form-control" [(ngModel)]="person.phoneNumber[phoneIndex].type" name="phoneType">
+                  <mat-option value="Serviciu">Serviciu</mat-option>
+                  <mat-option value="Acasă">Acasă</mat-option>
+                  <mat-option value="Personal">Personal</mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="form-control-container-small">
+              <label for="street">
+                Numar:
+                <em *ngIf="personError.phoneNumber[phoneIndex].number !== ''">{{personError.phoneNumber[phoneIndex].number}}</em>
+              </label>
+              <input class="form-control" [(ngModel)]="person.phoneNumber[phoneIndex].number" (ngModelChange)="handlePhoneFieldChange()" name="number">
+
+          </div>
+          <div class="list-options-container">
+            <div class="arrow-icon-container">
+              <i class="fas fa-arrow-left" (click)="goToPhone(false)"></i>
+              <i *ngIf="phoneError === -1" class="fas fa-exclamation-circle  error-icon"></i>
+            </div>
+            <i class="fas fa-minus" (click)="removePhone()"></i>
+            <p>{{phoneIndex + 1}} / {{person.phoneNumber.length}}</p>
+            <i class="fas fa-plus" (click)="addPhone()"></i>
+            <div *ngIf="phoneError !== 1" class="right-arrow-icon-container">
+              <i class="fas fa-arrow-right" (click)="goToPhone(true)"></i>
+            </div>
+            <div *ngIf="phoneError === 1" class="arrow-icon-container">
+              <i class="fas fa-exclamation-circle error-icon"></i>
+              <i class="fas fa-arrow-right" (click)="goToPhone(true)"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="list-container">
+        <div class="address-header-container">
+          <div class="empty-container"></div>
+          <h5>Adresa</h5>
+          <div class="empty-container">
+            <i class="fas fa-map-marker-alt" *ngIf="person.address.length !== 0" (click)="goToGoogleMaps()"></i>
+          </div>
+        </div>
+        <button *ngIf="person.address.length === 0" class="btn btn-light add-button" (click)="addAddress()" >Adauga adresa</button>
+        <div *ngIf="person.address.length > 0"  class="list-content-container">
+          <div class="form-control-container-small">
+            <label for="addressType">Tip:</label>
+            <div class="type-field-container">
+              <mat-select class="form-control" [(ngModel)]="person.address[addressIndex].type" name="addressType">
+                  <mat-option value="Serviciu">Serviciu</mat-option>
+                  <mat-option value="Acasă">Acasă</mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="inline-form-controls-container">
+            <div class="form-control-fragment-container ">
+              <label for="street">
+                Strada:
+                <em class="em-small" *ngIf="personError.address[addressIndex].street !== ''">{{personError.address[addressIndex].street}}</em>
+              </label>
+              <input class="form-control" [(ngModel)]="person.address[addressIndex].street" (ngModelChange)="handleAddressFieldChange('street')" name="street">
+            </div>
+            <div class="form-control-fragment-container ">
+              <label for="city">
+                Oras:
+                <em class="em-small" *ngIf="personError.address[addressIndex].city !== ''">{{personError.address[addressIndex].city}}</em>
+              </label>
+              <input class="form-control" [(ngModel)]="person.address[addressIndex].city" (ngModelChange)="handleAddressFieldChange('city')" name="city">
+            </div>
+            <div class="form-control-fragment-container ">
+              <label for="country">
+                Tara:
+                <em class="em-small" *ngIf="personError.address[addressIndex].country !== ''">{{personError.address[addressIndex].country}}</em>
+              </label>
+              <input class="form-control" [(ngModel)]="person.address[addressIndex].country" (ngModelChange)="handleAddressFieldChange('country')" name="country">
+            </div>
+          </div>
+          <div class="list-options-container">
+            <div class="arrow-icon-container">
+              <i class="fas fa-arrow-left" (click)="goToAddress(false)"></i>
+              <i *ngIf="addressError === -1" class="fas fa-exclamation-circle  error-icon"></i>
+            </div>
+            <i class="fas fa-minus" (click)="removeAddress()"></i>
+            <p>{{addressIndex + 1}} / {{person.address.length}}</p>
+            <i class="fas fa-plus" (click)="addAddress()"></i>
+            <div *ngIf="addressError !== 1" class="right-arrow-icon-container">
+              <i class="fas fa-arrow-right" (click)="goToAddress(true)"></i>
+            </div>
+            <div *ngIf="addressError === 1" class="arrow-icon-container">
+              <i class="fas fa-exclamation-circle error-icon"></i>
+              <i class="fas fa-arrow-right" (click)="goToAddress(true)"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-control-container">
+        <label for="notes">
+          Notite:
+          <em *ngIf="personError.notes !== ''">{{personError.notes}}</em>
+        </label>
+        <textarea class="form-control" [(ngModel)]="person.notes" (ngModelChange)="handleNotesChange()" name="notes"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-button-container">
+      <button class="btn btn-success" (click)="onSubmit()">Salveaza contact</button>
+    </div>
+  </div>
+</div>

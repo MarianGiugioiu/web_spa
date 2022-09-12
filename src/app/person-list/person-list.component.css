@@ -1,0 +1,54 @@
+.select-container {
+  width: 200px;
+}
+
+.select {
+  text-align: center;
+}
+
+.list-container {
+  padding: 3px;
+  width: 250px;
+  height: 70vh;
+  border: solid;
+  border-radius: 5px;
+  border-width: 2px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-input {
+  width: 200px;
+  height: 3vh;
+}
+
+.search-label {
+  margin-top: 2vh;
+}
+
+.button-create {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.group-list {
+  margin-left: 10px;
+}
+
+.list-element {
+  background-color: lightskyblue;
+  border-radius: 5px;
+  border-width: 1px;
+  width: 150px;
+  margin-top: 2px;
+  font-weight: bold;
+}
+
+.group-element{
+  background-color: lightblue;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-top: 2px;
+  width: 200px;
+}
